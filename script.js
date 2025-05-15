@@ -8,8 +8,7 @@ const swapBtn = document.querySelector(".swap");
 const rateInfo = document.querySelector(".rate-info");
 
 const calculate = () => {
-    fetch(
-        `https://api.exchangeratesapi.io/v1/latest?access_key=6af1d94e3ccc55d70c83417aeb86f99f&base=${currencyOne.value}&symbols=${currencyTwo.value}`
+    fetch(`https://api.frankfurter.dev/v1/latest?base=${currencyOne.value}&symbols=${currencyTwo.value}`
     )
         .then(res => res.json())
         .then(data => 
@@ -23,10 +22,17 @@ const calculate = () => {
         })
 }
 
+const swap = () => {
+    const temp = currencyOne.value;
+    currencyOne.value = currencyTwo.value;
+    currencyTwo.value = temp;
+    calculate();
+}
 
 
-currencyOne.addEventListener('change', calculate());
-currencyTwo.addEventListener('change', calculate());
-amountOne.addEventListener('input', calculate());
+currencyOne.addEventListener('change', calculate);
+currencyTwo.addEventListener('change', calculate);
+amountOne.addEventListener('input', calculate);
+swapBtn.addEventListener('click', swap);
 
 calculate();
